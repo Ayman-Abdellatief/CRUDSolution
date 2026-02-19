@@ -108,7 +108,9 @@ namespace ServiceContracts.DTO
                 Email = person.Email,
                 DateOfBirth = person.DateOfBirth,
                 GenderID = person.GenderID,
+                Gender = person.Gender,
                 CountryID = person.CountryID,
+                Country =person.Country,
                 Address = person.Address,
                 ReceiveNewsLetters = person.ReceiveNewsLetters,
                 Age = person.DateOfBirth.HasValue ? Math.Round((DateTime.Now - person.DateOfBirth.Value).TotalDays / 365.25, 1) : null

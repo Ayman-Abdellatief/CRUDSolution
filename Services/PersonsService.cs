@@ -21,26 +21,70 @@ namespace Services
             _countryService = new CountriesService();
             if (Initialize)
             {
-              
-                _persons.AddRange(new List<Person>() { new Person() {PersonID =Guid.Parse("5767C78B-C6A7-4F3D-A455-ABA4EBCF4710"),PersonName="Lewiss"
-                    ,Email="ltucknutt0@myspace.com",DateOfBirth=DateTime.Parse("1996-03-15"),Address="Genderqueer,83 Summerview Place",Gender="Male",ReceiveNewsLetters= true
-                ,CountryID = Guid.Parse("FA22B4FC-A720-490B-939D-B72A7EAD8BE1")},
-                new Person() {PersonID =Guid.Parse("F2AF91D7-AF3C-4A05-8A9B-81CFD1808259"),PersonName="Gibbie"
-                    ,Email="gstidworthy1@adobe.com",DateOfBirth=DateTime.Parse("1998-10-15"),Address=",Female,1655 Eggendart Road",Gender="Male",ReceiveNewsLetters= false
-                ,CountryID = Guid.Parse("D5409333-E453-47C9-A2B8-6D5C0439FE8D")},
-                    new Person() {PersonID =Guid.Parse("E1CF11AB-EE32-4D7C-B515-52729A762543"),PersonName="Clark"
-                    ,Email="cerni2@prweb.com",DateOfBirth=DateTime.Parse("1996-12-30"),Address="80362 Knutson Junction",Gender="Male",ReceiveNewsLetters= false
-                ,CountryID = Guid.Parse("95776507-9DA9-44F5-B106-F7ACE2E474FCD")},
-                        new Person() {PersonID =Guid.Parse("2A2E6E57-8EDD-49BD-8E64-0B34CFBF515E"),PersonName="Madelena"
-                    ,Email="Andria,aduchesne4@prweb.com",DateOfBirth=DateTime.Parse("1997-06-10"),Address="7318 Johnson Plaza",Gender="Female",ReceiveNewsLetters= true
-                ,CountryID = Guid.Parse("D5409333-E453-47C9-A2B8-6D5C0439FE8D")},
-                            new Person() {PersonID =Guid.Parse("F1DA467E-E7B2-42E2-92EF-353A3BAC5CAB"),PersonName="Cathie"
-                    ,Email="nchurches7@histats.com",DateOfBirth=DateTime.Parse("1999-07-16"),Address="Female,1655 Eggendart Road",Gender="Male",ReceiveNewsLetters= false
-                ,CountryID = Guid.Parse("95776507-9DA9-44F5-B106-F7ACE2E474FC")},
-                                new Person() {PersonID =Guid.Parse("6DE79119-CF1A-4FA1-8CEE-AB6B46808A31"),PersonName="Nicol"
-                    ,Email="jclemerson9@ovh.net",DateOfBirth=DateTime.Parse("1992-11-29"),Address="83 Summerview Place",Gender="Female",ReceiveNewsLetters= true
-                ,CountryID = Guid.Parse("FA22B4FC-A720-490B-939D-B72A7EAD8BE1") }
-                      });
+
+                _persons.AddRange(new List<Person>() {
+    new Person() {
+        PersonID = Guid.Parse("204FDF75-5763-4326-B20D-72F9D6082335"),
+        PersonName = "Lewiss",
+        Email = "ltucknutt0@myspace.com",
+        DateOfBirth = DateTime.Parse("1996-03-15"),
+        Address = "Genderqueer, 83 Summerview Place",
+        Gender = "Male",
+        ReceiveNewsLetters = true,
+        CountryID = Guid.Parse("FA22B4FC-A720-490B-939D-B72A7EAD8BE1") // UK
+    },
+    new Person() {
+        PersonID = Guid.Parse("F2AF91D7-AF3C-4A05-8A9B-81CFD1808259"),
+        PersonName = "Gibbie",
+        Email = "gstidworthy1@adobe.com",
+        DateOfBirth = DateTime.Parse("1998-10-15"),
+        Address = ", Female, 1655 Eggendart Road",
+        Gender = "Male",
+        ReceiveNewsLetters = false,
+        CountryID = Guid.Parse("D5409333-E453-47C9-A2B8-6D5C0439FE8D") // USA
+    },
+    new Person() {
+        PersonID = Guid.Parse("E1CF11AB-EE32-4D7C-B515-52729A762543"),
+        PersonName = "Clark",
+        Email = "cerni2@prweb.com",
+        DateOfBirth = DateTime.Parse("1996-12-30"),
+        Address = "80362 Knutson Junction",
+        Gender = "Male",
+        ReceiveNewsLetters = false,
+        // FIXED: Removed extra 'D' from the end of the GUID below
+        CountryID = Guid.Parse("95776507-9DA9-44F5-B106-F7ACE2E474FC") // Australia
+    },
+    new Person() {
+        PersonID = Guid.Parse("2A2E6E57-8EDD-49BD-8E64-0B34CFBF515E"),
+        PersonName = "Madelena",
+        Email = "Andria, aduchesne4@prweb.com",
+        DateOfBirth = DateTime.Parse("1997-06-10"),
+        Address = "7318 Johnson Plaza",
+        Gender = "Female",
+        ReceiveNewsLetters = true,
+        CountryID = Guid.Parse("D5409333-E453-47C9-A2B8-6D5C0439FE8D") // USA
+    },
+    new Person() {
+        PersonID = Guid.Parse("F1DA467E-E7B2-42E2-92EF-353A3BAC5CAB"),
+        PersonName = "Cathie",
+        Email = "nchurches7@histats.com",
+        DateOfBirth = DateTime.Parse("1999-07-16"),
+        Address = "1655 Eggendart Road",
+        Gender = "Female",
+        ReceiveNewsLetters = false,
+        CountryID = Guid.Parse("95776507-9DA9-44F5-B106-F7ACE2E474FC") // Australia
+    },
+    new Person() {
+        PersonID = Guid.Parse("6DE79119-CF1A-4FA1-8CEE-AB6B46808A31"),
+        PersonName = "Nicol",
+        Email = "jclemerson9@ovh.net",
+        DateOfBirth = DateTime.Parse("1992-11-29"),
+        Address = "83 Summerview Place",
+        Gender = "Female",
+        ReceiveNewsLetters = true,
+        CountryID = Guid.Parse("FA22B4FC-A720-490B-939D-B72A7EAD8BE1") // UK
+    }
+});
             }
 
         }
@@ -75,7 +119,7 @@ namespace Services
         }
         public List<PersonResponse> GetAllPersons()
         {
-         return  _persons.Select(temp => temp.ToPersonResponse()).ToList();
+         return  _persons.Select(temp => ConvertPersonToPersonResponse(temp)).ToList();
         }
 
         public PersonResponse? GetPersonByPersonID(Guid personID)
@@ -104,34 +148,34 @@ namespace Services
 
             switch (searchBy)
             {
-                case nameof(Person.PersonName):
-                    matchingPersons = allPersons.Where(x => (string.IsNullOrEmpty(x.PersonName) ? x.PersonName.Contains(searchString, StringComparison.OrdinalIgnoreCase) : true)).ToList();
+                case nameof(PersonResponse.PersonName):
+                    matchingPersons = allPersons.Where(x => !string.IsNullOrEmpty(x.PersonName) && x.PersonName.Contains(searchString, StringComparison.OrdinalIgnoreCase)).ToList();
                     break;
 
 
-                case nameof(Person.Email):
-                    matchingPersons = allPersons.Where(x => (string.IsNullOrEmpty(x.Email) ? x.Email.Contains(searchString, StringComparison.OrdinalIgnoreCase) : true)).ToList();
+                case nameof(PersonResponse.Email):
+                    matchingPersons = allPersons.Where(x => !string.IsNullOrEmpty(x.Email) && x.Email.Contains(searchString, StringComparison.OrdinalIgnoreCase)).ToList();
                     break;
 
-                case nameof(Person.DateOfBirth):
+                case nameof(PersonResponse.DateOfBirth):
                     matchingPersons = allPersons.Where(x => (x.DateOfBirth != null) ? x.DateOfBirth.Value.ToString("dd MMMM yyyy").Contains(searchString, StringComparison.OrdinalIgnoreCase) : true).ToList();
                     break;
 
 
-                case nameof(Person.Gender):
+                case nameof(PersonResponse.Gender):
                     matchingPersons = allPersons.Where(x => (!string.IsNullOrEmpty(x.Gender) ? x.Gender.Contains(searchString, StringComparison.OrdinalIgnoreCase) : true)).ToList();
                     break;
 
 
 
-                case nameof(Person.Country):
+                case nameof(PersonResponse.Country):
                     matchingPersons = allPersons.Where(x => (!string.IsNullOrEmpty(x.Country) ? x.Country.Contains(searchString, StringComparison.OrdinalIgnoreCase) : true)).ToList();
                     break;
 
 
 
 
-                case nameof(Person.Address):
+                case nameof(PersonResponse.Address):
                     matchingPersons  = allPersons.Where(x => (!string.IsNullOrEmpty(x.Address) ? x.Address.Contains(searchString, StringComparison.OrdinalIgnoreCase) : true)).ToList();
                     break;
 
@@ -234,7 +278,7 @@ namespace Services
                 person.Address = personUpdateRequest.Address;
                 person.ReceiveNewsLetters = personUpdateRequest.ReceiveNewsLetters;
 
-                return  person.ToPersonResponse();
+                return ConvertPersonToPersonResponse(person) ;
             }
 
         public bool DeletePerson(Guid? personID)

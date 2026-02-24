@@ -85,5 +85,61 @@ namespace CRUDExample.Controllers
          PersonResponse personResponse =   _personsService.AddPerson(personAddRequest);
             return RedirectToAction("Index", "Persons");
         }
+
+        [HttpGet]
+
+        [Route("[action]/{PersonID}")]
+        public IActionResult Edit(Guid PersonID)
+        {
+            PersonResponse? personResponse = _personsService.GetPersonByPersonID(PersonID);
+            if (personResponse == null)
+            {
+                return RedirectToAction("Index");
+            }
+            PersonUpdateRequest personUpdateRequest = personResponse.ToPersonUpdteRequest();
+            List<CountryResponse> Countries = _countriesService.GetAllCountries();
+            ViewBag.Countries = Countries.Select(temp =>
+
+             new SelectListItem()
+             {
+                 Text = temp.CountryName,
+                 Value = temp.CountryID.ToString()
+             }
+         );
+
+            return View(personUpdateRequest);
+        }
+
+        [HttpPost]
+        [Route("[action]/{PersonID}")]
+        public IActionResult Edit(PersonUpdateRequest personUpdateRequest)
+        {
+           PersonResponse personResponse = _personsService.GetPersonByPersonID(personUpdateRequest.PersonID);
+            if(personResponse == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            if(ModelState.IsValid)
+            {
+                PersonResponse Updateperson =  _personsService.UpdatePerson(personUpdateRequest);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                List<CountryResponse> Countries = _countriesService.GetAllCountries();
+                ViewBag.Countries = Countries.Select(temp =>
+
+                 new SelectListItem()
+                 {
+                     Text = temp.CountryName,
+                     Value = temp.CountryID.ToString()
+                 }
+             );
+                ViewBag.Errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+                return View();
+            }
+           
+        }
     }
 }

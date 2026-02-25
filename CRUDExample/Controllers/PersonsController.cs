@@ -137,9 +137,39 @@ namespace CRUDExample.Controllers
                  }
              );
                 ViewBag.Errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
-                return View();
+                return View(personResponse.ToPersonUpdteRequest());
             }
            
         }
-    }
+
+        [HttpGet]
+        [Route("[action]/{PersonID}")]
+        public IActionResult Delete(Guid? PersonID)
+        {
+            if (PersonID == null)
+            {
+                return RedirectToAction("Index");
+            }
+            PersonResponse? personResponse = _personsService.GetPersonByPersonID(PersonID.Value);
+            if (personResponse == null)
+            {
+                return RedirectToAction("Index");
+            }
+            return View(personResponse);
+
+        }
+
+        [HttpPost]
+        [Route("[action]/{PersonID}")]
+        public IActionResult Delete(PersonUpdateRequest personUpdateRequest)
+        {
+            PersonResponse? personResponse = _personsService.GetPersonByPersonID(personUpdateRequest.PersonID);
+            if (personResponse == null)
+            {
+                return RedirectToAction("Index");
+            }
+            bool isDeleted = _personsService.DeletePerson(personUpdateRequest.PersonID);
+            return RedirectToAction("Index");
+        }
+        }
 }

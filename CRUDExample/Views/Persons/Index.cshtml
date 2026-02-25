@@ -78,6 +78,12 @@
                            asp-route-PersonID="@person.PersonID">
                             Edit
                         </a>
+
+                        <a asp-controller="Persons"
+                           asp-action="Delete"
+                           asp-route-PersonID="@person.PersonID">
+                            Delete
+                        </a>
                     </td>
 
             </tr>

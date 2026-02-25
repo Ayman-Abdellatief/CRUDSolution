@@ -10,8 +10,10 @@ builder.Services.AddSingleton<IPersonsService, PersonsService>();
 
 builder.Services.AddDbContext<PersonsDbContext>(otpions =>
 {
-    otpions.UseSqlServer();
+    otpions.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
+
 var app = builder.Build();
 
 if(!app.Environment.IsDevelopment())

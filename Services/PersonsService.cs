@@ -12,80 +12,14 @@ namespace Services
     public class PersonsService : IPersonsService
     {
         //private readonly List<Person> _persons = new List<Person>();
-        private readonly List<Person> _persons;
+        private readonly PersonsDbContext _db;
         private  readonly ICountriesService _countryService;
 
-        public PersonsService(bool Initialize = true)
+        public PersonsService(PersonsDbContext personsDbContext,ICountriesService countriesService)
         {
-            _persons = new List<Person>();
-            _countryService = new CountriesService();
-            if (Initialize)
-            {
-
-                _persons.AddRange(new List<Person>() {
-    new Person() {
-        PersonID = Guid.Parse("204FDF75-5763-4326-B20D-72F9D6082335"),
-        PersonName = "Lewiss",
-        Email = "ltucknutt0@myspace.com",
-        DateOfBirth = DateTime.Parse("1996-03-15"),
-        Address = "Genderqueer, 83 Summerview Place",
-        Gender = "Male",
-        ReceiveNewsLetters = true,
-        CountryID = Guid.Parse("FA22B4FC-A720-490B-939D-B72A7EAD8BE1") // UK
-    },
-    new Person() {
-        PersonID = Guid.Parse("F2AF91D7-AF3C-4A05-8A9B-81CFD1808259"),
-        PersonName = "Gibbie",
-        Email = "gstidworthy1@adobe.com",
-        DateOfBirth = DateTime.Parse("1998-10-15"),
-        Address = ", Female, 1655 Eggendart Road",
-        Gender = "Male",
-        ReceiveNewsLetters = false,
-        CountryID = Guid.Parse("D5409333-E453-47C9-A2B8-6D5C0439FE8D") // USA
-    },
-    new Person() {
-        PersonID = Guid.Parse("E1CF11AB-EE32-4D7C-B515-52729A762543"),
-        PersonName = "Clark",
-        Email = "cerni2@prweb.com",
-        DateOfBirth = DateTime.Parse("1996-12-30"),
-        Address = "80362 Knutson Junction",
-        Gender = "Male",
-        ReceiveNewsLetters = false,
-        // FIXED: Removed extra 'D' from the end of the GUID below
-        CountryID = Guid.Parse("95776507-9DA9-44F5-B106-F7ACE2E474FC") // Australia
-    },
-    new Person() {
-        PersonID = Guid.Parse("2A2E6E57-8EDD-49BD-8E64-0B34CFBF515E"),
-        PersonName = "Madelena",
-        Email = "Andria, aduchesne4@prweb.com",
-        DateOfBirth = DateTime.Parse("1997-06-10"),
-        Address = "7318 Johnson Plaza",
-        Gender = "Female",
-        ReceiveNewsLetters = true,
-        CountryID = Guid.Parse("D5409333-E453-47C9-A2B8-6D5C0439FE8D") // USA
-    },
-    new Person() {
-        PersonID = Guid.Parse("F1DA467E-E7B2-42E2-92EF-353A3BAC5CAB"),
-        PersonName = "Cathie",
-        Email = "nchurches7@histats.com",
-        DateOfBirth = DateTime.Parse("1999-07-16"),
-        Address = "1655 Eggendart Road",
-        Gender = "Female",
-        ReceiveNewsLetters = false,
-        CountryID = Guid.Parse("95776507-9DA9-44F5-B106-F7ACE2E474FC") // Australia
-    },
-    new Person() {
-        PersonID = Guid.Parse("6DE79119-CF1A-4FA1-8CEE-AB6B46808A31"),
-        PersonName = "Nicol",
-        Email = "jclemerson9@ovh.net",
-        DateOfBirth = DateTime.Parse("1992-11-29"),
-        Address = "83 Summerview Place",
-        Gender = "Female",
-        ReceiveNewsLetters = true,
-        CountryID = Guid.Parse("FA22B4FC-A720-490B-939D-B72A7EAD8BE1") // UK
-    }
-});
-            }
+            _db = personsDbContext;
+            _countryService = countriesService;
+        
 
         }
         private PersonResponse ConvertPersonToPersonResponse(Person person)
@@ -110,16 +44,17 @@ namespace Services
             //generta personID
             person.PersonID = Guid.NewGuid();
             //Add person to the list
-            _persons.Add(person);
-
+            _db.Persons.Add(person);
+            _db.SaveChanges();
             //Create a PersonResponse object to return
-         return   ConvertPersonToPersonResponse(person);
+            return   ConvertPersonToPersonResponse(person);
 
 
         }
         public List<PersonResponse> GetAllPersons()
         {
-         return  _persons.Select(temp => ConvertPersonToPersonResponse(temp)).ToList();
+            //return  _db.Persons.ToList().Select(temp => ConvertPersonToPersonResponse(temp)).ToList();
+            return _db.sp_GetAllPersons().Select(temp => ConvertPersonToPersonResponse(temp)).ToList(); 
         }
 
         public PersonResponse? GetPersonByPersonID(Guid personID)
@@ -128,7 +63,7 @@ namespace Services
           if(personID == null)
                 return null;
  
-          Person? person =   _persons.FirstOrDefault(temp => temp.PersonID == personID);
+          Person? person =   _db.Persons.FirstOrDefault(temp => temp.PersonID == personID);
          if (person == null)
                 return null;
             return ConvertPersonToPersonResponse(person);
@@ -265,7 +200,7 @@ namespace Services
                 ValidationHelper.ModelValidation(personUpdateRequest);
 
                 //Find the person to be updated
-                Person? person = _persons.FirstOrDefault(temp => temp.PersonID == personUpdateRequest.PersonID);
+                Person? person = _db.Persons.FirstOrDefault(temp => temp.PersonID == personUpdateRequest.PersonID);
                 if (person == null)
                     throw new KeyNotFoundException($"Person with ID {personUpdateRequest.PersonID} not found.");
 
@@ -277,8 +212,9 @@ namespace Services
                 person.CountryID = personUpdateRequest.CountryID;
                 person.Address = personUpdateRequest.Address;
                 person.ReceiveNewsLetters = personUpdateRequest.ReceiveNewsLetters;
+            _db.SaveChanges();  //Update the person details in the list
 
-                return ConvertPersonToPersonResponse(person) ;
+            return ConvertPersonToPersonResponse(person) ;
             }
 
         public bool DeletePerson(Guid? personID)
@@ -286,11 +222,12 @@ namespace Services
             if(personID == null)
                 throw new ArgumentNullException(nameof(personID), "Person ID cannot be null.");
 
-          Person? person =  _persons.FirstOrDefault(temp => temp.PersonID == personID);
+          Person? person =  _db.Persons.FirstOrDefault(temp => temp.PersonID == personID);
             if (person == null)
                     return false;
     
-                 _persons.RemoveAll (x =>x.PersonID == personID);
+                 _db.Persons.Remove(person);
+            _db.SaveChanges();
             return true;
         }
     }

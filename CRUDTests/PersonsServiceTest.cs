@@ -1,4 +1,5 @@
 ﻿using Entities;
+using Microsoft.EntityFrameworkCore;
 using ServiceContracts;
 using ServiceContracts.DTO;
 using ServiceContracts.Enums;
@@ -18,8 +19,9 @@ namespace CRUDTests
         private readonly ITestOutputHelper _testOutput;
         public PersonsServiceTest(ITestOutputHelper testOutput)
         {
-            _personsService = new PersonsService();
-            _countriesService = new CountriesService(false);
+            _countriesService = new CountriesService(new PersonsDbContext(new DbContextOptionsBuilder<PersonsDbContext>().Options));
+            _personsService = new PersonsService(new PersonsDbContext(new DbContextOptionsBuilder<PersonsDbContext>().Options), _countriesService);
+       
             _testOutput = testOutput;
         }
         [Fact]

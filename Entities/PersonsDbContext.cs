@@ -15,7 +15,7 @@ namespace Entities
 
         public PersonsDbContext(DbContextOptions options) : base(options)
         {
-            
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -27,8 +27,8 @@ namespace Entities
             modelBuilder.Entity<Person>().ToTable("Persons");
 
             //Seed to Countries
-         string CountriesJson =    System.IO.File.ReadAllText("countries.json");
-                List<Country> countries = System.Text.Json.JsonSerializer.Deserialize<List<Country>>(CountriesJson);
+            string CountriesJson = System.IO.File.ReadAllText("countries.json");
+            List<Country> countries = System.Text.Json.JsonSerializer.Deserialize<List<Country>>(CountriesJson);
 
             foreach (var country in countries)
             {
@@ -45,6 +45,11 @@ namespace Entities
                 modelBuilder.Entity<Person>().HasData(person);
             }
 
+        }
+
+        public List<Person> sp_GetAllPersons()
+        {
+           return this.Persons.FromSqlRaw("EXECUTE dbo.GetAllPersons").ToList();
         }
     }
 }

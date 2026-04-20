@@ -44,8 +44,10 @@ namespace Services
             //generta personID
             person.PersonID = Guid.NewGuid();
             //Add person to the list
-            _db.Persons.Add(person);
-            _db.SaveChanges();
+            //_db.Persons.Add(person);
+            //_db.SaveChanges();
+
+            _db.sp_InsertPerson(person);
             //Create a PersonResponse object to return
             return   ConvertPersonToPersonResponse(person);
 

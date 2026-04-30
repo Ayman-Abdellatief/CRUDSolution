@@ -113,8 +113,10 @@ namespace ServiceContracts.DTO
              
                 Address = person.Address,
                 ReceiveNewsLetters = person.ReceiveNewsLetters,
-                Age = person.DateOfBirth.HasValue ? Math.Round((DateTime.Now - person.DateOfBirth.Value).TotalDays / 365.25, 1) : null
+                Age = person.DateOfBirth.HasValue ? Math.Round((DateTime.Now - person.DateOfBirth.Value).TotalDays / 365.25, 1) : null,Country = person.Country?.CountryName
             };
         }
+
+       
     }
 }

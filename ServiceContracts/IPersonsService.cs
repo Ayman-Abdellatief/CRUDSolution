@@ -59,5 +59,11 @@ namespace ServiceContracts
         /// <param name="personID"></param>
         /// <returns></returns>
      Task<bool> DeletePerson(Guid? personID);
+
+        /// <summary>
+        ///  retrieves a CSV file containing the details of all persons in the system. The CSV file will include relevant information such as person name, email,
+        /// </summary>
+        /// <returns></returns>
+        Task<MemoryStream> GetPersonsCSV();
     }
 }

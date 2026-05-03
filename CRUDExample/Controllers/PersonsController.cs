@@ -178,12 +178,22 @@ namespace CRUDExample.Controllers
         public async Task<IActionResult> PersonsPDF()
         {
             // Get List of Persons
-          List<PersonResponse> persons = await  _personsService.GetAllPersons();
+            List<PersonResponse> persons = await _personsService.GetAllPersons();
 
-            return new ViewAsPdf("PersonsPDF", persons, ViewData){
-            PageMargins = new Rotativa.AspNetCore.Options.Margins() { Top = 20, Bottom = 20, Left = 20, Right = 20 },
-            PageOrientation = Rotativa.AspNetCore.Options.Orientation.Landscape
+            return new ViewAsPdf("PersonsPDF", persons, ViewData)
+            {
+                PageMargins = new Rotativa.AspNetCore.Options.Margins() { Top = 20, Bottom = 20, Left = 20, Right = 20 },
+                PageOrientation = Rotativa.AspNetCore.Options.Orientation.Landscape
             };
+        }
+
+
+        [Route("PersonsCSV")]
+        public async Task<IActionResult> PersonsCSV()
+        {
+            MemoryStream memoryStream = await _personsService.GetPersonsCSV();
+
+            return File(memoryStream, "application/octet-stream", "Persons.csv");
         }
     }
 }

@@ -21,5 +21,7 @@ namespace ServiceContracts
         ///get country by country ID
         
        Task <CountryResponse?> GetCountryByCountryID(Guid? countryID);
+
+        //Task<int> UploadCountriesFromExcelFile(IformFile formfile);
     }
 }

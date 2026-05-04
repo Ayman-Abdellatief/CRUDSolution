@@ -65,5 +65,12 @@ namespace ServiceContracts
         /// </summary>
         /// <returns></returns>
         Task<MemoryStream> GetPersonsCSV();
+
+
+        /// <summary>
+        /// retrieves an Excel file containing the details of all persons in the system. The Excel file will include relevant information such as person name, email,
+        /// </summary>
+        /// <returns></returns>
+        Task<MemoryStream> GetPersonsExcel();
     }
 }

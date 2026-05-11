@@ -15,7 +15,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<ICountriesService, CountriesService>();
 builder.Services.AddScoped<IPersonsService, PersonsService>();
 
-builder.Services.AddDbContext<PersonsDbContext>(otpions =>
+builder.Services.AddDbContext<ApplicationDbContext>(otpions =>
 {
     otpions.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });

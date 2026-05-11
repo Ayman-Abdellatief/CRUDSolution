@@ -10,11 +10,11 @@ namespace Services
     public class CountriesService : ICountriesService
     {
         //privite filed field to store list of countries
-        private readonly PersonsDbContext _db;
+        private readonly ApplicationDbContext _db;
 
 
         //constructor to initialize  countries
-        public CountriesService(PersonsDbContext personsDbContext )
+        public CountriesService(ApplicationDbContext personsDbContext )
         {
             _db = personsDbContext;
             

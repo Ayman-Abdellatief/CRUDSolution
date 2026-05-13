@@ -3,7 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using OfficeOpenXml;
 using ServiceContracts;
 using Services;
- 
+using Repositories;
+using RepositoryContracts;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,8 +14,11 @@ var licenseName = builder.Configuration["EPPlus:LicenseName"];
 ExcelPackage.License.SetNonCommercialPersonal(licenseName);
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<ICountriesRepository, CountriesRepository>();
+builder.Services.AddScoped<IPersonsRepository, PersonsRepository>();
 builder.Services.AddScoped<ICountriesService, CountriesService>();
 builder.Services.AddScoped<IPersonsService, PersonsService>();
+
 
 builder.Services.AddDbContext<ApplicationDbContext>(otpions =>
 {

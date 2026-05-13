@@ -38,7 +38,7 @@ namespace CRUDTests
             _countriesService = new CountriesService(null);
 
            
-            _personsService = new PersonsService(dbContext, _countriesService);
+            _personsService = new PersonsService(null);
        
             _testOutput = testOutput;
         }
